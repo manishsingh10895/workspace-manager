@@ -59,7 +59,7 @@
     "codelyzer": "5.0.1",
     "conventional-changelog-cli": "2.0.11",
     "core-js": "2.6.1",
-    "electron": "5.0.2",
+    "electron": "^5.0.2",
     "electron-builder": "20.41.0",
     "electron-reload": "1.4.0",
     "jasmine-core": "3.3.0",
@@ -82,5 +82,12 @@
   },
   "engines": {
     "node": ">=10.9.0"
+  },
+  "dependencies": {
+    "jsonpath": "^1.0.2",
+    "semantic-ui": "^2.4.2",
+    "shell-path": "^2.1.0",
+    "xml2js": "^0.4.19",
+    "xml2json": "^0.11.2"
   }
 }

@@ -1,0 +1,63 @@
+.directory {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.workspace-list {
+  .extra.content {
+    margin-top: 15px;
+  }
+
+  .workspace {
+    height: 375px;
+    overflow-y: hidden;
+    flex-basis: 30%;
+
+    .title {
+      font-size: 22px;
+      font-weight: bold;
+      padding: 10px 15px;
+      text-align: left;
+
+      &:after {
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 200px 200px 0;
+        border-color: transparent #007bff transparent transparent;
+      }
+    }
+
+    .content {
+      height: calc(100% - 39px);
+      overflow-y: auto;
+    }
+
+    .actions {
+      padding-bottom: 15px;
+    }
+  }
+}
+
+.description {
+  .command {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    margin-top: 0.2em;
+    line-height: 1.6;
+    margin-bottom: 0.2em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 0.5em 0.5em;
+    display: block;
+    word-wrap: break-word;
+  }
+}
+
+.workspace {
+}

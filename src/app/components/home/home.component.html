@@ -1,5 +1,77 @@
-<div class="container">
-  <h1 class="title">
-    {{ 'PAGES.HOME.TITLE' | translate }}
-  </h1>
-</div>
+<div class="ui container">
+
+  <form [formGroup]="form">
+    <div class="input-container">
+      <div class="ui transparent left icon input">
+        <input formControlName="name" type="text" placeholder="Workspace Name">
+        <i class="folder icon"></i>
+      </div>
+    </div>
+
+    <div class="input-container" formGroupName="directory">
+      <div class="ui transparent left icon action input">
+        <input formControlName="path" type="text" placeholder="Add Directory">
+        <i class="folder icon"></i>
+        <button id="showProgBtn" (click)="showPrograms()" class="ui teal right icon button"
+          data-content="Open with Application">
+          <i class="microchip icon"></i>
+        </button>
+      </div>
+
+      <div class="ui transparent left icon input">
+        <input formControlName="command" type="text" placeholder="Init Command">
+        <i class="cogs icon"></i>
+      </div>
+
+      <div class="ui vertical animated button" tabindex="0">
+        <div (click)="addDirectory()" class="hidden content">Add</div>
+        <div class="visible content">
+          <i class="plus icon"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="program-list" *ngIf="programs.length">
+      <div class="ui item" *ngFor="let p of programs">
+
+      </div>
+    </div>
+
+    <div class="primary actions">
+      <div class="ui vertical animated positive large button action" tabindex="0">
+        <div (click)="saveWorkspace()" class="hidden content">Save Workspace</div>
+        <div class="visible content">
+          <i class="save icon"></i>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="current-workspace">
+    <h2 class="ui center aligned icon header">
+      <i class="circular keyboard outline icon"></i>
+      Current Workspace Directories
+    </h2>
+
+    <div *ngIf="workspaceFolders.length" class="ui container">
+      <table class="ui bottom table">
+        <thead>
+          <tr>
+            <th>Path</th>
+            <th>Command</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let d of workspaceFolders">
+            <td>
+              {{d.path}}
+            </td>
+            <td>
+              {{d.command}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

@@ -1,0 +1,29 @@
+<div id="programs-modal" class="ui modal visible active">
+  <div class="header">
+    Choose a starter program
+  </div>
+
+  <div class="scrolling content">
+
+    <div class="ui list">
+      <div class="item" (click)="selectProgram(p)" *ngFor="let p of programs$ | async">
+        <i class="icon terminal"></i>
+
+        <div class="content">
+          <div class="header">
+            {{p.name}}
+          </div>
+
+          <div class="description">
+            {{p.path}}
+          </div>
+        </div>
+
+        <div class="binary-select">
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

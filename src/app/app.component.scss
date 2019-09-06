@@ -1,0 +1,27 @@
+.app-modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1050;
+  &.hidden {
+    display: none;
+  }
+
+  display: block;
+}
+
+.app-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: 1049;
+  background-color: #333;
+  opacity: 0.3;
+  &.hidden {
+    display: none;
+  }
+
+  display: block;
+}

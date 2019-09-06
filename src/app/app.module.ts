@@ -18,6 +18,12 @@ import { WebviewDirective } from './directives/webview.directive';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { WorkspacesComponent } from './components/workspaces/workspaces.component';
+import { WorkspaceComponent } from './components/workspace/workspace.component';
+import { LoaderComponent } from './components/loader/loader.component';
+import { AlertComponent } from './components/alert/alert.component';
+import { ProgramsModalComponent } from './modals/programs-modal/programs-modal.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -28,11 +34,20 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     HomeComponent,
-    WebviewDirective
+    WebviewDirective,
+    WorkspacesComponent,
+    WorkspaceComponent,
+    LoaderComponent,
+    AlertComponent,
+    ProgramsModalComponent
+  ],
+  entryComponents: [
+    ProgramsModalComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     TranslateModule.forRoot({
@@ -43,7 +58,18 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [ElectronService],
+  providers: [
+    ElectronService,
+    {
+      provide: 'DOCUMENT',
+      useFactory: getDocument
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+export function getDocument() {
+  return (typeof document !== 'undefined') ? document : null;
+}

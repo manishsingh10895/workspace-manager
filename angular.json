@@ -27,7 +27,10 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/jquery.js",
+              "src/assets/semantic.min.js"
+            ]
           },
           "configurations": {
             "dev": {

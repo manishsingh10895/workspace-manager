@@ -1,0 +1,52 @@
+<div class="ui container">
+
+  <div class="ui header">
+    Work Spaces
+  </div>
+
+  <div class="workspace-list">
+
+    <div class="ui cards">
+      <div *ngFor="let w of workspaces" class="card workspace">
+        <div class="title">
+          {{w.name}}
+        </div>
+        <div class="content">
+
+          <div class="actions">
+            <div class="ui three buttons">
+              <div *ngIf="!openedWorkspaces[w.name]" (click)="open(w)" class="ui inverted green button">Open</div>
+              <div *ngIf="openedWorkspaces[w.name]" (click)="closeWorkspace(w)" class="ui inverted red button">Close
+              </div>
+              <div (click)="edit(w)" class="ui inverted green button">Edit</div>
+              <div (click)="remove(w)" class="ui inverted red button">Remove</div>
+            </div>
+          </div>
+
+          <div class="description">
+            <ng-container *ngIf="w.directories">
+              <h5>Directories</h5>
+              <div class="ui middle aligned divided list">
+                <div *ngFor="let d of w.directories" title="{{d.path}}" class="item">
+                  <div class="content">
+                    <div class="directory item">
+                      <div class="header">
+                        {{d.path}}
+                      </div>
+
+                      <span *ngIf="d.command" class="command">{{d.command}}</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </ng-container>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

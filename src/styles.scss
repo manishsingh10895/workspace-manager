@@ -1,7 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
 
   height: 100%;
+}
+
+.app-container {
+  padding: 0 2%;
+}
+
+.ui.active.modal {
+  min-width: 400px;
+  min-height: 400px;
+  transform: translate3d(-50%, -50%, 0);
 }

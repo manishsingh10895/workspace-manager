@@ -1,4 +1,5 @@
 export const AppConfig = {
   production: false,
-  environment: 'LOCAL'
+  environment: 'LOCAL',
+  WORKSPACES_STORAGE_FILE: "workspaces.json"
 };
