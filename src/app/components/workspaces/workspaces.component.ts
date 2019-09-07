@@ -70,9 +70,19 @@ export class WorkspacesComponent implements OnInit {
         let openedConfigs = [];
 
         directories.forEach((d: DirectoryInfo) => {
-          let cmd = this._elService.childProcess.exec(`code ${d.path}`);
+          let editor_text = d.editor ? 'open -a' + d.editor.path.split(' ').join('\\ ') : 'code';
+
+          let editor_cmd = `${editor_text} ${d.path}`;
+
+          console.log(editor_cmd);
+
+          let cmd = this._elService.childProcess.exec(editor_cmd);
           cmd.on('error', (err) => {
             console.error(err);
+          })
+
+          cmd.on('message', (err) => {
+            console.log(err);
           })
 
           cmd.on('exit', (e) => {
@@ -116,7 +126,7 @@ export class WorkspacesComponent implements OnInit {
           openedConfigs.push(openConfig);
         });
 
-        this.openedWorkspaces[workspace.name] = openedConfigs;
+        // this.openedWorkspaces[workspace.name] = openedConfigs;
 
         console.log(this.openedWorkspaces);
       }

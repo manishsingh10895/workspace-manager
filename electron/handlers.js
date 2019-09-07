@@ -39,16 +39,32 @@ var electron_1 = require("electron");
 var spawn = require('child_process').spawn;
 var parser = require('xml2json');
 var jp = require('jsonpath');
+var os = require('os');
 function setHandlers(win) {
     var _this = this;
     electron_1.ipcMain.on('get-app-list', function (event, args) { return __awaiter(_this, void 0, void 0, function () {
-        var apps;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, getApplist()];
-                case 1:
-                    apps = _a.sent();
-                    console.log(apps);
+        var platform, apps, _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    platform = os.platform();
+                    apps = [];
+                    _a = platform;
+                    switch (_a) {
+                        case 'darwin': return [3 /*break*/, 1];
+                        case 'linux': return [3 /*break*/, 3];
+                    }
+                    return [3 /*break*/, 5];
+                case 1: return [4 /*yield*/, getApplistMac()];
+                case 2:
+                    apps = _b.sent();
+                    return [3 /*break*/, 6];
+                case 3: return [4 /*yield*/, getApplistLinux()];
+                case 4:
+                    apps = _b.sent();
+                    _b.label = 5;
+                case 5: return [3 /*break*/, 6];
+                case 6:
                     event.reply('app-list-get', apps);
                     return [2 /*return*/];
             }
@@ -59,7 +75,7 @@ exports.setHandlers = setHandlers;
 /**
  * Gets list of apps available in applications folder
  */
-function getApplist() {
+function getApplistMac() {
     return new Promise(function (resolve, reject) {
         var sp = spawn('system_profiler', ['-xml', 'SPApplicationsDataType']);
         var apps = "";
@@ -93,6 +109,11 @@ function getApplist() {
             });
             resolve(relApps);
         });
+    });
+}
+function getApplistLinux() {
+    return new Promise(function (resolve, reject) {
+        resolve([]);
     });
 }
 //# sourceMappingURL=handlers.js.map

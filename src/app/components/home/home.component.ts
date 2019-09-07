@@ -18,11 +18,14 @@ declare var $: any;
 })
 export class HomeComponent implements OnInit {
 
+  selectedEditor: { name: string, path: string };
+
   form: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
     directory: new FormGroup({
       path: new FormControl('', [Validators.required]),
-      command: new FormControl('')
+      command: new FormControl(''),
+      editor: new FormControl('')
     })
   });
 
@@ -54,7 +57,6 @@ export class HomeComponent implements OnInit {
     let modalRef: ComponentRef<any> = this._modals.renderModal(ProgramsModalComponent, {
       data: {
         onClose: (program: Program) => {
-          console.log("asda");
           console.log(program);
         }
       }
@@ -62,6 +64,8 @@ export class HomeComponent implements OnInit {
 
     modalRef.instance.onClose.subscribe((s) => {
       console.log(s);
+      this.form.get('directory').get('editor').setValue(s);
+      this.selectedEditor = s;
     });
   }
 
@@ -109,6 +113,8 @@ export class HomeComponent implements OnInit {
     this._loader.showLoader();
 
     let directory: DirectoryInfo = this.form.get('directory').value;
+
+    console.log(directory);
 
     try {
 

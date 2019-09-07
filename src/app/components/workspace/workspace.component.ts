@@ -58,7 +58,6 @@ export class WorkspaceComponent implements OnInit {
         this._loader.hideLoader();
       }
 
-
     }, (err) => {
       console.error(err);
 

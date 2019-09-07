@@ -14,7 +14,8 @@
         <i class="folder icon"></i>
         <button id="showProgBtn" (click)="showPrograms()" class="ui teal right icon button"
           data-content="Open with Application">
-          <i class="microchip icon"></i>
+          <i *ngIf="!selectedEditor" class="microchip icon"></i>
+          <ng-container *ngIf="selectedEditor && selectedEditor.name">{{selectedEditor.name}}</ng-container>
         </button>
       </div>
 
@@ -58,6 +59,7 @@
         <thead>
           <tr>
             <th>Path</th>
+            <th>Editor</th>
             <th>Command</th>
           </tr>
         </thead>
@@ -66,6 +68,9 @@
           <tr *ngFor="let d of workspaceFolders">
             <td>
               {{d.path}}
+            </td>
+            <td>
+              {{d.editor ? d.editor.name : ''}}
             </td>
             <td>
               {{d.command}}
