@@ -40,7 +40,8 @@ The Angular component contains an example of Electron and NodeJS native lib impo
 You can disable "Developer Tools" by commenting `win.webContents.openDevTools();` in `main.ts`.
 
 ## Download for MacOS
-You can download just the application for MacOS [Download](https://github.com/manishsingh10895/workspace-manager/releases/download/v0.0.1-beta-mac/workspace-manager-6.0.1.dmg]
+You can download just the application for MacOS 
+[Download for Mac](https://github.com/manishsingh10895/workspace-manager/releases/download/v0.0.1-beta-mac/workspace-manager-6.0.1.dmg)
 
 
 
