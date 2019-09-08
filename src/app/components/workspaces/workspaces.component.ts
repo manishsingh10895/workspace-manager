@@ -8,11 +8,6 @@ import { AlertService } from '../../providers/alert.service';
 
 const WORKSPACES_STORAGE_FILE = 'workspaces.json';
 
-interface OpenConfig {
-  editors: number[],
-  scripts: number[]
-}
-
 @Component({
   selector: 'app-workspaces',
   templateUrl: './workspaces.component.html',
@@ -34,106 +29,14 @@ export class WorkspacesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.workspaces = this._workspaceService.getWorkspaces();
 
-    let content = this._elService.fs.readFileSync(this._workspaceService.workspsaceStorageFile).toString('utf-8');
-    let json = JSON.parse(content);
-
-    console.log(json);
-
-    this.workspaces = Object.keys(json)
-      .map(k => {
-        let name = k;
-        let directories = json[k].directories;
-
-        return {
-          name, directories
-        };
-      });
-
-    console.log(this.workspaces);
+    this._elService.ipcRenderer.emit('workspaces-loaded');
   }
 
   open(workspace: Workspace) {
 
-    console.log(workspace);
-    try {
-
-      let openConfig: OpenConfig = {
-        editors: [],
-        scripts: []
-      };
-
-      if (workspace.directories && workspace.directories.length) {
-
-        let directories = workspace.directories;
-
-        let openedConfigs = [];
-
-        directories.forEach((d: DirectoryInfo) => {
-          let editor_text = d.editor ? 'open -a' + d.editor.path.split(' ').join('\\ ') : 'code';
-
-          let editor_cmd = `${editor_text} ${d.path}`;
-
-          console.log(editor_cmd);
-
-          let cmd = this._elService.childProcess.exec(editor_cmd);
-          cmd.on('error', (err) => {
-            console.error(err);
-          })
-
-          cmd.on('message', (err) => {
-            console.log(err);
-          })
-
-          cmd.on('exit', (e) => {
-            console.log(e);
-          })
-          console.log(d);
-
-          //Add to open config
-          openConfig.editors.push(cmd.pid);
-
-          let initScript = this._workspaceService.getInitCommandScript(d);
-
-          console.log(initScript);
-
-          if (initScript) {
-            cmd = this._elService.childProcess.exec(initScript);
-
-            cmd.on('exit', (code) => {
-              console.log(code);
-            });
-
-            cmd.on('error', (err) => {
-              console.error(err);
-            })
-
-            cmd.stderr.on('error', e => {
-              console.error(e);
-            })
-
-            cmd.stdout.on('data', e => {
-              console.log(e);
-            })
-
-            cmd.on('message', (message) => {
-              console.log(message);
-            })
-
-            openConfig.scripts.push(cmd.pid);
-          }
-
-          openedConfigs.push(openConfig);
-        });
-
-        // this.openedWorkspaces[workspace.name] = openedConfigs;
-
-        console.log(this.openedWorkspaces);
-      }
-
-    } catch (e) {
-      console.error(e);
-    }
+    this._workspaceService.openWorkSpace(workspace);
 
   }
 
@@ -146,18 +49,6 @@ export class WorkspacesComponent implements OnInit {
       this._alerts.showError('This workspace is not opened');
       return;
     }
-
-    let openedConfigs: Array<OpenConfig> = this.openedWorkspaces[workspace.name];
-
-    openedConfigs.forEach(oc => {
-      oc.editors.forEach(c => {
-        this.killProcess(c);
-      })
-
-      oc.scripts.forEach(s => {
-        this.killProcess(s);
-      })
-    });
   }
 
   remove(workspace: Workspace) {
@@ -178,6 +69,8 @@ export class WorkspacesComponent implements OnInit {
     this._elService.fs.writeFileSync(this._workspaceService.workspsaceStorageFile, JSON.stringify(savedWorkSpaces));
 
     alert("Workspace deleted");
+
+    this._elService.ipcRenderer.emit('workspaces-updated')
   }
 
   edit(workspace: Workspace) {

@@ -40,8 +40,16 @@ var spawn = require('child_process').spawn;
 var parser = require('xml2json');
 var jp = require('jsonpath');
 var os = require('os');
+var app_tray_1 = require("./app-tray");
 function setHandlers(win) {
     var _this = this;
+    electron_1.ipcMain.on('workspaces-updated', function (event, args) { return __awaiter(_this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            console.log("updated");
+            app_tray_1.UpdateAppTray(win);
+            return [2 /*return*/];
+        });
+    }); });
     electron_1.ipcMain.on('get-app-list', function (event, args) { return __awaiter(_this, void 0, void 0, function () {
         var platform, apps, _a;
         return __generator(this, function (_b) {
@@ -82,9 +90,7 @@ function getApplistMac() {
         var relApps = [];
         sp.stdout.setEncoding('utf-8');
         sp.stdout.on('data', function (data) {
-            console.log("DATA------------");
             apps += data;
-            console.log("DATA------------");
         });
         sp.stderr.on('data', function (data) {
             console.log("stderr: " + data);

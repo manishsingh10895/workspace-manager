@@ -3,8 +3,14 @@ const { spawn } = require('child_process');
 const parser = require('xml2json');
 const jp = require('jsonpath');
 const os = require('os');
+import { buildAppTray, UpdateAppTray } from './app-tray';
 
 export function setHandlers(win: BrowserWindow) {
+
+    ipcMain.on('workspaces-updated', async (event, args) => {
+        console.log("updated");
+        UpdateAppTray(win);
+    });
 
     ipcMain.on('get-app-list', async (event, args) => {
         let platform = os.platform();
@@ -37,9 +43,7 @@ function getApplistMac(): Promise<any[]> {
 
         sp.stdout.setEncoding('utf-8');
         sp.stdout.on('data', (data) => {
-            console.log("DATA------------");
             apps += data;
-            console.log("DATA------------");
         });
 
         sp.stderr.on('data', (data) => {

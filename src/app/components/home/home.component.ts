@@ -101,6 +101,9 @@ export class HomeComponent implements OnInit {
     this.form.reset();
 
     this.workspaceFolders = [];
+
+    //Send add update to main
+    this._elService.ipcRenderer.emit('workspaces-updated');
   }
 
   _checkIfAlreadyExists(arr: Array<any>, predicate) {

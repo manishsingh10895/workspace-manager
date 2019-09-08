@@ -8,6 +8,11 @@ import { Program } from '../classes/program.class';
 import { ipcMain, ipcRenderer } from 'electron';
 import { from, Observable } from 'rxjs';
 
+interface OpenConfig {
+  editors: number[],
+  scripts: number[]
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,6 +37,23 @@ export class WorkspaceService {
     return new Promise(() => {
 
     });
+  }
+
+  getWorkspaces() {
+    let content = this._elService.fs.readFileSync(this.workspsaceStorageFile).toString('utf-8');
+    let json = JSON.parse(content);
+
+    console.log(json);
+
+    return Object.keys(json)
+      .map(k => {
+        let name = k;
+        let directories = json[k].directories;
+
+        return {
+          name, directories
+        };
+      });
   }
 
   private _getAvailablePrograms(): Promise<Program[]> {
@@ -68,7 +90,7 @@ export class WorkspaceService {
       end tell'
       `;
       //ADD COMMAND FOR LINUX
-      case 'linux': return 
+      case 'linux': return
 
       default: return `gnome-terminal -c "${d.command}"`
     }
@@ -125,6 +147,92 @@ export class WorkspaceService {
     });
   }
 
+  /**
+   * Opens up the workspace
+   * @param workspace workspace to open
+   */
+  openWorkSpace(workspace: Workspace) {
+    console.log(workspace);
+    try {
+
+      let openConfig: OpenConfig = {
+        editors: [],
+        scripts: []
+      };
+
+      if (workspace.directories && workspace.directories.length) {
+
+        let directories = workspace.directories;
+
+        let openedConfigs = [];
+
+        directories.forEach((d: DirectoryInfo) => {
+          let editor_text = d.editor ? 'open -a' + d.editor.path.split(' ').join('\\ ') : 'code';
+
+          let editor_cmd = `${editor_text} ${d.path}`;
+
+          console.log(editor_cmd);
+
+          let cmd = this._elService.childProcess.exec(editor_cmd);
+          cmd.on('error', (err) => {
+            console.error(err);
+          })
+
+          cmd.on('message', (err) => {
+            console.log(err);
+          })
+
+          cmd.on('exit', (e) => {
+            console.log(e);
+          })
+          console.log(d);
+
+          //Add to open config
+          openConfig.editors.push(cmd.pid);
+
+          let initScript = this.getInitCommandScript(d);
+
+          console.log(initScript);
+
+          if (initScript) {
+            cmd = this._elService.childProcess.exec(initScript);
+
+            cmd.on('exit', (code) => {
+              console.log(code);
+            });
+
+            cmd.on('error', (err) => {
+              console.error(err);
+            })
+
+            cmd.stderr.on('error', e => {
+              console.error(e);
+            })
+
+            cmd.stdout.on('data', e => {
+              console.log(e);
+            })
+
+            cmd.on('message', (message) => {
+              console.log(message);
+            })
+
+            openConfig.scripts.push(cmd.pid);
+          }
+
+          openedConfigs.push(openConfig);
+        });
+
+        // this.openedWorkspaces[workspace.name] = openedConfigs;
+
+        console.log(this.openedWorkspaces);
+      }
+
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
 
   /**
    * Verifies if path exists
@@ -165,5 +273,6 @@ export class WorkspaceService {
 
   constructor(
     private _elService: ElectronService
-  ) { }
+  ) {
+  }
 }

@@ -20,9 +20,11 @@
               "src/assets",
               "src/favicon.ico",
               "src/favicon.png",
-              "src/favicon.icns",
-              "src/favicon.256x256.png",
-              "src/favicon.512x512.png"
+              "src/tray.png",
+              "src/icon_256x256.png",
+              "src/icon_256x256@2x.png",
+              "src/icon_512x512@2x.png",
+              "src/icon_256x256.png"
             ],
             "styles": [
               "src/styles.scss"

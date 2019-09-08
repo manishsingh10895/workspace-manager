@@ -4,32 +4,13 @@ import * as url from 'url';
 declare var jQuery: any;
 
 import { setHandlers } from './electron/handlers';
+import { buildAppTray } from './electron/app-tray';
 
-let win, serve;
+let win: BrowserWindow, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
 
-let appIcon: Tray;
-
 function createWindow() {
-
-  appIcon = new Tray('./logo-angular.jpg');
-
-  const contextMenu = Menu.buildFromTemplate([
-    { label: 'Workspaces', type: 'normal' }
-  ])
-
-  appIcon.setContextMenu(contextMenu);
-
-  appIcon.on('click', (e) => {
-    console.log(e);
-    let n = new Notification({
-      title: 'Workspace Manager',
-      body: JSON.stringify(e)
-    })
-    
-    n.show();
-  });
 
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
@@ -43,6 +24,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
     },
+    icon: __dirname + '/dist/favicon.png'
   });
 
   if (serve) {
@@ -72,6 +54,16 @@ function createWindow() {
 
   setHandlers(win);
 
+  let trayIconPath;
+  if (serve) {
+    trayIconPath = __dirname + '/src/tray.png'
+  } else {
+    trayIconPath = __dirname + '/dist/tray.png'
+  }
+
+  let appIcon = new Tray(trayIconPath);
+
+  buildAppTray(appIcon, win);
 }
 
 try {

@@ -6,6 +6,7 @@ import { DirectoryInfo } from '../../classes/directory-info.class';
 import { AlertService } from '../../providers/alert.service';
 import { WorkspaceService } from '../../providers/workspace.service';
 import { LoaderService } from '../../providers/loader.service';
+import { ipcRenderer } from 'electron';
 
 @Component({
   selector: 'app-workspace',
