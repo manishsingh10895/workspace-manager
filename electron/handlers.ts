@@ -1,11 +1,15 @@
-import { BrowserView, BrowserWindow, ipcMain } from 'electron';
+import { BrowserView, BrowserWindow, ipcMain, App } from 'electron';
 const { spawn } = require('child_process');
 const parser = require('xml2json');
 const jp = require('jsonpath');
 const os = require('os');
 import { buildAppTray, UpdateAppTray } from './app-tray';
 
-export function setHandlers(win: BrowserWindow) {
+export function setHandlers(app: App, win: BrowserWindow) {
+
+    ipcMain.on('close', (event, args) => {
+        app.quit();
+    })
 
     ipcMain.on('workspaces-updated', async (event, args) => {
         console.log("updated");

@@ -1,8 +1,6 @@
-<div class="ui container">
+<app-page-title [title]="'Your Workspaces'"></app-page-title>
 
-  <div class="ui header">
-    Work Spaces
-  </div>
+<div class="ui container">
 
   <div class="workspace-list">
 
@@ -50,3 +48,7 @@
   </div>
 
 </div>
+
+<button [routerLink]="['/home']" class="ui circular fab icon button">
+  <i class="plus icon"></i>
+</button>

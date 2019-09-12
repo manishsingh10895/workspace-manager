@@ -74,7 +74,13 @@ export class WorkspaceService {
   }
 
   getAvailablePrograms(): Observable<Program[]> {
-    return from(this._getAvailablePrograms());
+    let promise = this._getAvailablePrograms()
+      .then(progs => {
+        let ar = progs.map(x => x);
+        ar.unshift({ name: 'None', path: '' });
+        return ar;
+    });
+    return from(promise);
   }
 
   getInitCommandScript(d: DirectoryInfo): string {

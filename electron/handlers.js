@@ -41,8 +41,11 @@ var parser = require('xml2json');
 var jp = require('jsonpath');
 var os = require('os');
 var app_tray_1 = require("./app-tray");
-function setHandlers(win) {
+function setHandlers(app, win) {
     var _this = this;
+    electron_1.ipcMain.on('close', function (event, args) {
+        app.quit();
+    });
     electron_1.ipcMain.on('workspaces-updated', function (event, args) { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             console.log("updated");

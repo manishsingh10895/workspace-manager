@@ -24,6 +24,7 @@ import { WorkspaceComponent } from './components/workspace/workspace.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { ProgramsModalComponent } from './modals/programs-modal/programs-modal.component';
+import { PageTitleComponent } from './components/page-title/page-title.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -39,7 +40,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     WorkspaceComponent,
     LoaderComponent,
     AlertComponent,
-    ProgramsModalComponent
+    ProgramsModalComponent,
+    PageTitleComponent
   ],
   entryComponents: [
     ProgramsModalComponent

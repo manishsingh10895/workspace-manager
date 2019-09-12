@@ -1,3 +1,5 @@
+@import "./variables";
+
 .app-modal-container {
   position: fixed;
   top: 50%;
@@ -24,4 +26,25 @@
   }
 
   display: block;
+}
+
+.menu {
+  margin-bottom: 0px !important; 
+  border: none !important;
+  > a {
+    &.active {
+      background-color: $primary;
+      color: white;
+
+      &:hover {
+        background-color: darken($color: $primary, $amount: 5);
+        color: white;
+      }
+    }
+
+    &:hover {
+      background-color: darken($color: $primary, $amount: 5);
+      color: white;
+    }
+  }
 }

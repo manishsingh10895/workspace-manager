@@ -154,12 +154,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._loader.showLoader();
     this._workSpaceService.getAvailablePrograms()
       .subscribe((res) => {
-        this._loader.hideLoader();
       }, err => {
-        this._loader.hideLoader();
       })
   }
 

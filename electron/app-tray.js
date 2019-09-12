@@ -28,15 +28,20 @@ function open(workspace, win) {
 function buildAppTray(tray, win) {
     console.log(__dirname);
     var workspaces = getWorkspaces();
-    var template = [{
-            type: 'normal', label: "workspaces"
-        }];
+    var template = [];
     workspaces.forEach(function (w) {
         template.push({
             label: w.name,
             type: 'normal',
             click: function () { return open(w, win); }
         });
+    });
+    template.push({
+        label: 'Quit',
+        type: 'normal',
+        click: function () {
+            electron_1.ipcMain.emit('close');
+        }
     });
     var contextMenu = electron_1.Menu.buildFromTemplate(template);
     tray.setContextMenu(contextMenu);

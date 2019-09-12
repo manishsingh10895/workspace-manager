@@ -40,9 +40,7 @@ export function buildAppTray(tray: Tray, win: BrowserWindow) {
     let workspaces = getWorkspaces();
 
 
-    let template: Array<MenuItemConstructorOptions> = [{
-        type: 'normal', label: "workspaces"
-    }];
+    let template: Array<MenuItemConstructorOptions> = [];
 
     workspaces.forEach((w) => {
         template.push({
@@ -51,6 +49,14 @@ export function buildAppTray(tray: Tray, win: BrowserWindow) {
             click: () => open(w, win)
         })
     });
+
+    template.push({
+        label: 'Quit',
+        type: 'normal',
+        click: () => {
+            ipcMain.emit('close');
+        }
+    })
 
     const contextMenu = Menu.buildFromTemplate(template);
 

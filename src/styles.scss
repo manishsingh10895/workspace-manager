@@ -1,3 +1,4 @@
+@import './app/variables';
 /* You can add global styles to this file, and also import other style files */
 html,
 body {
@@ -8,11 +9,20 @@ body {
 }
 
 .app-container {
-  padding: 0 2%;
 }
 
 .ui.active.modal {
   min-width: 400px;
   min-height: 400px;
   transform: translate3d(-50%, -50%, 0);
+}
+
+.ui.fab.button {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  font-size: 24px;
+  background-color: $primary;
+  color: white;
+  box-shadow: 3px 7px 12px 5px rgba(8, 8, 8, 0.2509803922);
 }
