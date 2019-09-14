@@ -4,6 +4,10 @@
 </a>
 
 # Introduction
+Create and edit your workspaces, 
+open all directories using your favorite code editor and run all initial commands with a single click
+
+
 
 ## Getting Started
 
@@ -28,6 +32,13 @@ Please follow [Angular-cli documentation](https://github.com/angular/angular-cli
 ``` bash
 npm install -g @angular/cli
 ```
+
+
+### Road ahead
+* Searching for workspace
+* Dark theme
+* migrate to sqlite
+* maybe sync data with cloud
 
 ## To build for development
 
