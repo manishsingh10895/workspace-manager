@@ -1,0 +1,7 @@
+title: Workspace Manager
+theme: jekyll-theme-cayman
+logo: /assets/icons/icon-3.svg
+show_downloads: true
+github:
+  zip_url: https://github.com/manishsingh10895/workspace-manager/archive/v0.0.1-beta-mac.zip
+  another_url: https://github.com/manishsingh10895/workspace-manager/releases/download/v0.0.1-beta-mac/workspace-manager-6.0.1.dmg

@@ -1,0 +1,60 @@
+<app-page-title [title]="workspace?.name"></app-page-title>
+
+<div class="ui container">
+
+  <div (click)="goHome()" class="ui close icon">
+
+  </div>
+
+  <h2 class="ui center aligned icon header">
+    <i class="circular cubes icon"></i>
+    <span #name class="content-editable" (click)="toggleElementEditable(name)"> {{workspace?.name}}</span>
+  </h2>
+
+
+  <div class="ui segment">
+
+    <div *ngIf="workspace && workspace.directories && workspace.directories.length" class="ui container">
+      <table class="ui bottom table">
+        <thead>
+          <tr>
+            <th>Path</th>
+            <th>Command</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr #workspace *ngFor="let d of workspace.directories; let i = index">
+            <td>
+              <div class="ui transparent input">
+                <input [(ngModel)]="d.path" disabled type="text">
+              </div>
+            </td>
+            <td>
+              <div class="ui transparent input">
+                <input placeholder="Enter Command" [(ngModel)]="d.command" disabled type="text">
+              </div>
+            </td>
+            <td>
+              <div class="actions">
+                <i *ngIf="!d.editable" (click)="makeEditable(workspace, d)" class="action edit outline icon">
+
+                </i>
+
+                <i class="check circle icon" *ngIf="d.editable" (click)="saveDirectory(workspace, d, i)"></i>
+
+                <i (click)="removeItem(i, d)" class="trash icon">
+
+                </i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+
+</div>

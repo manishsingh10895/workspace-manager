@@ -1,0 +1,83 @@
+<app-page-title [title]="'Create Workspace'"></app-page-title>
+
+<div class="ui container">
+  <form [formGroup]="form">
+    <div class="input-container">
+      <div class="ui transparent left icon input">
+        <input formControlName="name" type="text" placeholder="Workspace Name">
+        <i class="folder icon"></i>
+      </div>
+    </div>
+
+    <div class="input-container" formGroupName="directory">
+      <div class="ui transparent left icon action input">
+        <input formControlName="path" type="text" placeholder="Add Directory">
+        <i (click)="showFolders()" class="folder wm-point icon"></i>
+        <button id="showProgBtn" (click)="showPrograms()" class="ui teal right icon button"
+          data-content="Open with Application">
+          <i *ngIf="!selectedEditor" class="microchip wm-icon-colored icon"></i>
+          <ng-container *ngIf="selectedEditor && selectedEditor.name">{{selectedEditor.name}}</ng-container>
+        </button>
+      </div>
+
+      <div class="ui transparent left icon input">
+        <input formControlName="command" type="text" placeholder="Init Command">
+        <i class="cogs icon"></i>
+      </div>
+
+      <div class="ui vertical animated button" tabindex="0">
+        <div (click)="addDirectory()" class="hidden content">Add</div>
+        <div class="visible content">
+          <i class="plus icon"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="program-list" *ngIf="programs.length">
+      <div class="ui item" *ngFor="let p of programs">
+
+      </div>
+    </div>
+
+    <div class="primary actions">
+      <div class="ui wm-btn-colored vertical animated positive large button action" tabindex="0">
+        <div (click)="saveWorkspace()" class="hidden content">Save Workspace</div>
+        <div class="visible content">
+          <i class="save icon"></i>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="current-workspace">
+    <h2 class="ui center aligned icon header">
+      <i class="circular keyboard outline icon"></i>
+      Current Workspace Directories
+    </h2>
+
+    <div *ngIf="workspaceFolders.length" class="ui container">
+      <table class="ui bottom table">
+        <thead>
+          <tr>
+            <th>Path</th>
+            <th>Editor</th>
+            <th>Command</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let d of workspaceFolders">
+            <td>
+              {{d.path}}
+            </td>
+            <td>
+              {{d.editor ? d.editor.name : ''}}
+            </td>
+            <td>
+              {{d.command}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

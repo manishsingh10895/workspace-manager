@@ -1,0 +1,15 @@
+<div class="app-root" data-theme="default">
+    <div class="ui two item menu">
+        <a class="item" [routerLinkActive]="'active'" [routerLink]="['/workspaces']">Workspaces</a>
+        <a class="item" [routerLinkActive]="'active'" [routerLink]="['/home']">Home</a>
+    </div>
+
+    <app-loader></app-loader>
+    <div [@slide]="prepareRoute(outlet)" class="app-container">
+        <app-alert></app-alert>
+        <router-outlet #outlet="outlet"></router-outlet>
+    </div>
+
+    <div class="app-modal-container hidden"></div>
+    <div class="app-modal-overlay hidden"></div>
+</div>

@@ -1,0 +1,9 @@
+<div class="alerts-container">
+
+  <div class="alerts">
+    <div *ngFor="let a of alerts" class="ui floating message alert"
+      [ngClass]="[a.type.toString() ? a.type.toString(): '']">
+      {{a.message}}
+    </div>
+  </div>
+</div>
