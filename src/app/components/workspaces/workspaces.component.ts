@@ -43,6 +43,9 @@ export class WorkspacesComponent implements OnInit {
 
     this._workspaceService.openWorkSpace(workspace);
 
+    let notification = new Notification('Workspace Opened', {
+      body: workspace.name
+    });
   }
 
   /***

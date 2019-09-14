@@ -5,7 +5,7 @@ import { ElectronService } from './electron.service';
 import { DirectoryInfo } from '../classes/directory-info.class';
 import { Workspace } from '../classes/workspace.class';
 import { Program } from '../classes/program.class';
-import { ipcMain, ipcRenderer } from 'electron';
+import { ipcMain, ipcRenderer, Notification } from 'electron';
 import { from, Observable } from 'rxjs';
 import { createInject } from '@angular/compiler/src/core';
 

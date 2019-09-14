@@ -9,6 +9,8 @@ export class PageTitleComponent implements OnInit {
 
   @Input('title') title: string;
 
+  @Input('suffixTemplate') suffixTemplate: string;
+
   constructor() { }
 
   ngOnInit() {
